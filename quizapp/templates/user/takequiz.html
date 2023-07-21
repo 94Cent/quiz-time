@@ -1,0 +1,154 @@
+<!-- takequiz.html -->
+{% extends "user/layout.html" %}
+
+{% block header %}{% endblock %}
+{% block customcss %}
+<style>
+    /* Your existing CSS styles */
+    .question-box {
+        background-color: hsl(0, 2%, 89%);
+        border: 1px solid #ccc;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .question-box h5 {
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .question-box h3 {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+
+    .question-box ul {
+        list-style-type: none;
+        padding-left: 0;
+    }
+
+    .question-box label {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    .question-box .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 4px;
+        margin-right: 10px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<h1>{{ quiz_data.quiz_name }}</h1>
+<p>Date: {{ quiz_data.date }}</p>
+<p>Time Started: {{ quiz_data.time_started }}</p>
+<div id="timerDisplay"></div>
+
+
+<form id="quizForm" action="/submitquiz/{{ quiz_data.quiz_id }}" method="POST">
+    <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
+    <div class="question-container">
+        <div class="question-box" id="question1">
+            <h3>Question 1:</h3>
+            <p>{{ quiz_data.questions[0].question }}</p>
+            <ul>
+                {% for option in quiz_data.questions[0].options %}
+                <li>
+                    
+                        <input type="radio" name="question_{{ quiz_data.questions[0].question_id }}" value="{{ loop.index }}" required>
+                        {{ option }}
+                  
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% for index in range(1, quiz_data.questions|length) %}
+        <div class="question-box" id="question{{ index + 1 }}" style="display: none;">
+            <h3>Question {{ index + 1 }}:</h3>
+            <p>{{ quiz_data.questions[index].question }}</p>
+            <ul>
+                {% for option in quiz_data.questions[index].options %}
+                <li>
+                    <label>
+                        <input type="radio" name="question_{{ quiz_data.questions[index].question_id }}" value="{{ option }}">
+                        {{ option }}
+                    </label>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="navigation-buttons">
+        <button type="button" class="btn btn-primary" onclick="showNextQuestion()">Next Question</button>
+        <input type="submit" value="Submit Quiz" style="display: none;" id="submitBtn">
+    </div>
+</form>
+
+<script>
+    // JavaScript functions to show previous and next questions
+    let currentQuestion = 1;
+    const quizData = {{quiz_data|tojson}};    
+    const totalQuestions = quizData.questions.length;
+    let timer;
+  let timeLeft = 30; // 30 seconds per question
+
+  function startTimer() {
+      // Display the initial time left
+      document.getElementById('timerDisplay').innerText = `${timeLeft} seconds`;
+
+      // Start the countdown timer
+      timer = setInterval(() => {
+          timeLeft--;
+          document.getElementById('timerDisplay').innerText = `${timeLeft} seconds`;
+
+          // Check if time is up
+          if (timeLeft <= 0) {
+              clearInterval(timer); // Clear the timer
+              showNextQuestion(); // Move to the next question
+          }
+      }, 1000); // 1000 milliseconds = 1 second
+  }
+
+  function showNextQuestion() {
+      // Clear the timer when moving to the next question
+      clearInterval(timer);
+
+      if (currentQuestion < totalQuestions) {
+          document.getElementById(`question${currentQuestion}`).style.display = 'none';
+          currentQuestion++;
+          document.getElementById(`question${currentQuestion}`).style.display = 'block';
+          updateButtonVisibility();
+
+          // Reset the time left for the new question
+          timeLeft = 30;
+
+          // Start the timer for the new question
+          startTimer();
+      }
+
+      // Check if the current question is the last question
+      if (currentQuestion === totalQuestions) {
+          // Hide the "Next Question" button since we're on the last question
+          document.getElementById('nextQuestionButton').style.display = 'none';
+      }
+  }
+
+  function updateButtonVisibility() {
+      // Show the "Next Question" button when moving to the next question
+      document.getElementById('nextQuestionButton').style.display = 'block';
+  }
+//     
+    function updateButtonVisibility() {
+        document.getElementById('submitBtn').style.display = currentQuestion === totalQuestions ? 'inline-block' : 'none';
+    }
+</script>
+
+{% endblock %}

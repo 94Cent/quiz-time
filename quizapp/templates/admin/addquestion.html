@@ -1,0 +1,74 @@
+{% extends "admin/admin_layout.html"%}
+{% block breadcrumbs %}
+  <ol class="breadcrumb mb-4">
+      <li class="breadcrumb-item"><a href='/admin/dashboard'></a>Dashboard</li>
+        <li class="breadcrumb-item active">Add Question</li>
+  </ol>
+      {% endblock breadcrumbs %}
+      {% block admincontent %}
+<div class="row">
+    <div class="col">
+        
+      <form action="" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
+        <div class="mb-3">
+            <label for="title" class="form-label">Category</label>
+            <select name="quecat" id="category">
+              <option>Please select category</option>
+                {% for x in quizcat %}
+              <option value="{{x.category_id}}">
+                {{x.category_name}}
+              </option>
+                {% endfor %}
+            
+            </select>
+
+            <select name="quediff" id="difficulty">
+              <option>Please select difficulty</option>
+                {% for y in questiondiff %}
+              <option value="{{y.difficulty_id}}">
+                {{y.description}}
+              </option>
+                {% endfor %}
+            
+            </select>
+
+
+              
+          </div>
+          <div class="mb-3">
+            <label for="title" class="form-label">Question</label>
+            <input type="text" class="form-control" name="question" id="question">
+            
+          </div>
+          <div class="mb-3">
+            <label for="author" class="form-label">Option 1</label>
+            <input type="text" class="form-control" id="option_1" name="option_1">
+          </div>
+          <div class="mb-3">
+            <label for="author" class="form-label">Option 2</label>
+            <input type="text" class="form-control" id="option_2" name="option_2">
+          </div>
+          <div class="mb-3">
+            <label for="author" class="form-label">Option 3</label>
+            <input type="text" class="form-control" id="option_3" name="option_3">
+          </div>
+          <div class="mb-3">
+            <label for="author" class="form-label">Option 4</label>
+            <input type="text" class="form-control" id="option_4" name="option_4">
+          </div>
+          <div class="mb-3">
+            <label for="author" class="form-label">Correct Answer</label>
+            <input type="text" class="form-control" id="correct_answer" name="correct_answer">
+          </div>
+          
+
+
+
+      <button type="submit" class="btn btn-primary">Add Question!</button>
+    </form>
+
+
+                      </div>
+                  </div>
+    {% endblock admincontent %}

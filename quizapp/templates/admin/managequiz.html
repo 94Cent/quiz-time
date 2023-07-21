@@ -1,0 +1,53 @@
+{% extends "admin/admin_layout.html"%}
+                        {% block breadcrumbs %}
+                        <ol class="breadcrumb mb-4">
+                            <li class="breadcrumb-item"><a href="/admin/dashboard">Quiz</a></li>
+                            <li class="breadcrumb-item active">Tables</li>
+                        </ol>
+                        {% endblock breadcrumbs %}
+                        {% block admincontent %}
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                Quiz Tables below consist of the quiz.  
+                                <a href="/admin/addquiz" class="btn btn-outline-primary">Add Quiz</a>
+                            </div>
+                        </div>
+{% if data %}
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-table me-1"></i>
+                                Quiz Table
+                            </div>
+                            <div class="card-body">
+                               <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Quiz Title</th>
+      <th scope="col">Difficulty</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+  {%for d,c in data %} 
+    <tr>
+      <th scope="row">{{loop.index}}</th>
+      <td>{{d.quiz_name}}</td>
+      <td>{{c.description}}</td>
+      <td>
+        <a href="{{url_for('update_quiz',quizid=d.quiz_id)}}" class="btn btn-sm btn-primary">Update</a>
+        <a href="/admin/deletequiz/{{d.quiz_id}}" onclick="return confirm('Do you really want to delete {{d.quiz_name}}?')" class="btn btn-sm btn-danger">Delete</a> 
+      </td>
+    </tr>
+     {% endfor %}
+  
+  </tbody>
+</table>
+                            </div>
+                        </div>
+{% else %}
+<div class="alert alert_info">No quiz has been added yet</div>
+{% endif %}
+
+                        {% endblock admincontent %}
+

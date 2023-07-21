@@ -1,0 +1,90 @@
+{% extends "admin/admin_layout.html"%}
+{% block breadcrumbs %}
+  <ol class="breadcrumb mb-4">
+      <li class="breadcrumb-item"><a href='/admin/dashboard'></a>Dashboard</li>
+        <li class="breadcrumb-item active">Create Quiz</li>
+  </ol>
+      {% endblock breadcrumbs %}
+      {% block admincontent %}
+<div class="row">
+    <div class="col">
+        
+      <form action="" method="post" enctype="multipart/form-data" >
+        <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
+        <div class="mb-3">
+          <select name="quiz" id="quiz">
+            <option>Please select quiz</option>
+              {% for y in quizqueid %}
+            <option value="{{y.quiz_id}}">
+              {{y.quiz_name}}
+            </option>
+              {% endfor %}
+          
+          </select>
+          <div id="questionlist"></div>
+
+<br>
+            <label for="title" class="form-label">Questions</label><br>
+            
+                {% for x in quizque %}
+              <input type="checkbox" name="quizque"  value="{{x.question_id}}" >
+                {{x.question}}
+              <br>
+                {% endfor %}
+          <div id="questionsContainer"></div>
+          
+
+        
+              
+          </div>
+          
+
+
+
+          <input type="submit" value="Submit">
+    </form>
+    
+                      </div>
+                  </div>
+    {% endblock admincontent %}
+    {% block customjs %}
+    <script src="{{ url_for('static',filename='js/jquery.min.js')}}"></script>
+<script>
+  
+  $(document).ready(function() {
+  // Handler for the quiz name selection change event
+  $('#quiz').change(function() {
+    // Retrieve the selected quiz name value
+    var selectedQuizName = $(this).val();
+
+    // Send an AJAX request to fetch questions with the same difficulty ID
+    $.ajax({
+      url: '/admin/allquestion', // Replace with the appropriate endpoint to fetch questions
+      method: 'GET',
+      data: {
+        quizName: selectedQuizName
+      },
+      success: function(response) {
+  if (response && response.questions && Array.isArray(response.questions)) {
+    var questions = response.questions;
+
+    // Clear previous questions
+    $('#questionsContainer').empty();
+
+    // Display the questions
+    questions.forEach(function(question) {
+      $('#questionsContainer').append('<div>' + question.text + '</div>');
+    });
+  } else {
+    console.log('Invalid response format');
+  }
+},
+      error: function(error) {
+        console.log(error);
+      }
+    });
+  });
+});
+</script>
+    {% endblock %}
+    

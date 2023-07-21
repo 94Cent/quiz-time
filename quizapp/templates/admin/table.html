@@ -1,0 +1,24 @@
+{% extends "admin/admin_layout.html" %}
+{% block admincontent %}
+<div class="content" style="background-color: white; padding: 3em;">
+    <h3>Welcome {{ admindeets.admin_username }}!</h3>
+<table>
+    <thead>
+        <tr>
+            <th>S/N</th>
+            <th>Username</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for admin in admindeets %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ admin.admin_username }}</td>
+            <!-- Display other admin details in additional columns -->
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+</div>
+{% endblock %}

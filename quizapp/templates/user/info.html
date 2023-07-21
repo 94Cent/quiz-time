@@ -1,0 +1,85 @@
+<!-- info.html -->
+{% extends "user/layout.html" %}
+
+{% block header %}{% endblock %}
+{% block customcss %}
+<style>
+    .info_box{
+    width: 540px;
+    background: #fff;
+    border-radius: 5px;
+    transform: translate(-50%, -50%) scale(0.9);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+}
+.info_box .info-title{
+    height: 60px;
+    width: 100%;
+    border-bottom: 1px solid lightgrey;
+    display: flex;
+    align-items: center;
+    padding: 0 30px;
+    border-radius: 5px 5px 0 0;
+    font-size: 20px;
+    font-weight: 600;
+}
+.info_box .info-list{
+    padding: 15px 30px;
+}
+.info_box .info-list .info{
+    margin: 5px 0;
+    font-size: 17px;
+}
+.info_box .info-list .info span{
+    font-weight: 600;
+    color: #007bff;
+}
+.info_box .buttons{
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 30px;
+    border-top: 1px solid lightgrey;
+}
+.info_box .buttons button{
+    margin: 0 5px;
+    height: 40px;
+    width: 100px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid #007bff;
+    transition: all 0.3s ease;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Info Box -->
+<div class="info_box" id="info_box">
+    <div class="info-title"><span>Some Rules of this Quiz</span></div>
+    <div class="info-list">
+        <div class="info">1. You will have only <span style="color:red">30 seconds</span> per each question.</div>
+        <div class="info">2. Once you select your answer, it can't be undone.</div>
+        <div class="info">3. You can't select any option once time goes off.</div>
+        <div class="info">4. You can't exit from the Quiz while you're playing.</div>
+        <div class="info">5. You'll get points on the basis of your correct answers.</div>
+    </div>
+    <div class="buttons">
+        <button class="restart" onclick="startQuizAndRedirect({{ quiz_data.quiz_id }})">Continue</button>
+    </div>
+</div>
+{% endblock %}
+{% block customjs %}
+<script>
+    function startQuizAndRedirect(quiz_id) {
+        // Redirect to the takequiz route with the quiz_id parameter
+        window.location.href = `/takequiz/${quiz_id}`;
+    }
+</script>
+{% endblock %}

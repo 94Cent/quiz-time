@@ -1,0 +1,56 @@
+{%extends "user/layout.html"%}
+{% block header %}{%endblock%}
+
+{% block content %}
+<h1>Quiz App Feedback Form</h1>
+<form action="submit_feedback.php" method="post">
+    <h2>1. Overall User Experience</h2>
+    <label for="experience">How would you rate your overall experience with the quiz app?</label><br>
+    <input type="radio" name="experience" value="excellent"> Excellent<br>
+    <input type="radio" name="experience" value="good"> Good<br>
+    <input type="radio" name="experience" value="average"> Average<br>
+    <input type="radio" name="experience" value="below_average"> Below Average<br>
+    <input type="radio" name="experience" value="poor"> Poor<br>
+
+    <label for="experience-details">Please elaborate on your rating. What aspects did you enjoy or find
+        lacking?</label><br>
+    <textarea name="experience-details" rows="4" cols="50"></textarea>
+
+    <h2>2. Overall User Experience</h2>
+    <label for="interface">User Interface and Design</label><br>
+    <input type="radio" name="interface" value="excellent"> Excellent<br>
+    <input type="radio" name="interface" value="good"> Good<br>
+    <input type="radio" name="interface" value="average"> Average<br>
+    <input type="radio" name="interface" value="below_average"> Below Average<br>
+    <input type="radio" name="interface" value="poor"> Poor<br>
+    <label for="interface-details">Please provide any feedback regarding the quiz questions or suggest areas for improvement.</label><br>
+    <textarea name="experience-details" rows="4" cols="50"></textarea>
+
+
+    <h2>3. Quiz Content</h2>
+    <label for="quiz">Did you find the quiz questions engaging and relevant?</label><br>
+    <input type="radio" name="quiz" value="Yes"> Yes<br>
+    <input type="radio" name="quiz" value="No"> No<br>
+    <label for="quiz-details">Please provide any feedback regarding the quiz questions or suggest areas for improvement.</label><br>
+    <textarea name="experience-details" rows="4" cols="50"></textarea>
+
+
+    <h2>4. Performance and Speed</h2>
+    <label for="performance">How satisfied were you with the app's performance and speed?</label><br>
+    <input type="radio" name="performance" value="Very Satisfied"> Very Satisfied<br>
+    <input type="radio" name="performance" value="Satified"> Satified<br>
+    <input type="radio" name="interface" value="Neutral"> Neutral<br>
+    <input type="radio" name="performance" value="Dissatisfied">Dissatisfied<br>
+    <input type="radio" name="performance" value="Very Dissatified"> Very Dissatified<br>
+    <label for="performance-details">Please provide any feedback regarding the quiz questions or suggest areas for improvement.</label><br>
+    <textarea name="experience-details" rows="4" cols="50"></textarea>
+
+
+    <h2>5. Any additional comments or suggestions to help us improve the quiz app?</h2>
+    <label for="performance-details">Please provide any feedback regarding improvement.</label><br>
+    <textarea name="experience-details" rows="4" cols="50"></textarea>
+    <br><br>
+    <input type="submit" value="Submit Feedback">
+</form>
+
+{%endblock%}

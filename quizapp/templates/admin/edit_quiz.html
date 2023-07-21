@@ -1,0 +1,12 @@
+{% extends "admin/admin_layout.html" %}
+{% block content %}
+{{e}}
+<form action="" method="post">
+    <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
+    
+    <input type="text" value="{{e.quiz_name}}" class="form-control" name="quizname"><br>
+
+    <button class="btn btn-success">Update</button>
+</form>
+
+{% endblock %}

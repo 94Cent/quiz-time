@@ -1,0 +1,53 @@
+{% extends "admin/admin_layout.html"%}
+                        {% block breadcrumbs %}
+                        <ol class="breadcrumb mb-4">
+                            <li class="breadcrumb-item"><a href="/admin/dashboard">Dashboard</a></li>
+                            <li class="breadcrumb-item active">Tables</li>
+                        </ol>
+                        {% endblock breadcrumbs %}
+                        {% block admincontent %}
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                Question Tables below consist of all the question.  
+                                <a href="/admin/addquestion" class="btn btn-outline-primary">Add Question</a>
+                            </div>
+                        </div>
+{% if ques %}
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-table me-1"></i>
+                                Question Table
+                            </div>
+                            <div class="card-body">
+                               <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Question</th>
+      <th scope="col">Category</th>
+      <th scope="col">Difficulty</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for q in ques %}
+    <tr>
+      <th scope="row">{{loop.index}}</th>
+      <td>{{q.question}}</td>
+      <td>{{q.quizcat.category_name}}</td>
+      <td>{{q.questiondiff.description}}</td>
+      <td>
+        <a href="/admin/deletequestion/{{q.question_id}}" onclick="return confirm('Do you really want to delete {{q.question}}?')" class="btn btn-sm btn-danger">Delete</a> 
+      </td>
+    </tr>
+     {% endfor %}
+  
+  </tbody>
+</table>
+                            </div>
+                        </div>
+{% else %}
+<div class="alert alert_info">No question has been added yet</div>
+{% endif %}
+
+                        {% endblock admincontent %}

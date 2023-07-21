@@ -1,0 +1,4 @@
+instance/
+quizbook/
+migrations/
+*.sql
